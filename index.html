@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>  
+    <div class="container">
+        <h2>Enviar imagens da Obra</h2>
+    <form method="post" class="form">
+        <input type="file" name="arquivo">        
+        <progress value="0" max="100" class="regress"></progress>
+    </form>
+</div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyDPhTabB7gNHdutY6CH7F9CoC0lxQS7IHw",
+    authDomain: "upload-de-imagens-396117.firebaseapp.com",
+    projectId: "upload-de-imagens-396117",
+    storageBucket: "upload-de-imagens-396117.appspot.com",
+    messagingSenderId: "875602451810",
+    appId: "1:875602451810:web:acbaab244dfa8bfecc603b"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const storage = getStorage(app);
+
+        const input = document.querySelector('input[type=file]');
+        const progressBar = document.querySelector('progress');
+
+        input.addEventListener('change', (e) => {
+            let file = e.target.files[0];
+            const storageRef = ref(storage, 'image/' + file.name); 
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on("state_changed",
+                (snapshot) => {
+                    let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.value = progress;
+                },
+                (error) => {
+                    console.log(error);
+                },
+                () => {
+                    console.log('Upload realizado com sucesso');
+                }
+            );
+        });
+    </script>
+</body>
+</html>
