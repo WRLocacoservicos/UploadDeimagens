@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>Document</title>
 </head>
 <body>  
+    <a class="voltar" href="https://servicos-wr.vercel.app/logado.html">Voltar</a>
     <div class="container">
+     
         <h2>Enviar imagens da Obra</h2>
     <form method="post" class="form">
-        <input type="file" name="arquivo">        
+        <input type="file" name="arquivo" multiple>        
         <progress value="0" max="100" class="regress"></progress>
     </form>
 </div>
@@ -38,7 +41,10 @@
         const progressBar = document.querySelector('progress');
 
         input.addEventListener('change', (e) => {
-            let file = e.target.files[0];
+            const files = e.target.files;
+            for(let i = 0; i<files.length; i++){
+                
+            let file = files[i];
             const storageRef = ref(storage, 'image/' + file.name); 
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -51,10 +57,22 @@
                     console.log(error);
                 },
                 () => {
-                    console.log('Upload realizado com sucesso');
+
+                    logado()
+                    input.value= ''
+                
                 }
             );
+            }
         });
+
+        function logado() { 
+      swal.fire({
+  
+          icon: "success",
+          title: "Imagem enviada com sucesso!"
+      });
+      }
     </script>
 </body>
 </html>
