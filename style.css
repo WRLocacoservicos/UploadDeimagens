@@ -18,6 +18,17 @@ body {
     box-shadow: 0 5px 10px rgba(0, 0 , 1, .9);
     color: white;
 }
+
+.enviar{
+    border:none;
+    top: 10%;
+    left: 5%;
+    background-color: #3387e7;
+    padding: 10px 15px;
+    text-decoration: none;
+    box-shadow: 0 5px 10px rgba(0, 0 , 1, .9);
+    color: white;
+}
 .container {
     max-width: 600px;
     margin: 0 auto;
